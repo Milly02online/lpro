@@ -1,0 +1,75 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  name      String   @db.VarChar(100)
+  username  String   @unique @db.VarChar(100)
+  password  String   @db.VarChar(60)
+  email     String?  @db.VarChar(255)
+  phone     String?  @db.VarChar(30)
+  role      Role?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  loans Loan[]
+}
+
+enum Role {
+  STAFF
+  ADMINISTRATOR
+}
+
+model Author {
+  id          Int       @id @default(autoincrement())
+  name        String    @db.VarChar(100)
+  nationality String?   @db.VarChar(50)
+  birthDate   DateTime?
+  biography   String?   @db.Text
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  books Book[]
+}
+
+model Book {
+  id              Int     @id @default(autoincrement())
+  title           String
+  isbn10          String? @db.VarChar(10)
+  isbn13          String? @db.VarChar(13)
+  pages           Int?
+  publicationYear Int?
+  synopsis        String? @db.Text
+  publisher       String?
+  genre           String?
+
+  authors Author[]
+  copies  Copy[]
+}
+
+model Copy {
+  id        Int     @id @default(autoincrement())
+  available Boolean @default(true)
+  notes     String? @db.Text
+  bookId    Int
+
+  book  Book   @relation(fields: [bookId], references: [id], onDelete: Cascade)
+  loans Loan[]
+}
+
+model Loan {
+  id             Int       @id @default(autoincrement())
+  date           DateTime  @default(now())
+  expectedReturn DateTime?
+  actualReturn   DateTime?
+  userId         Int
+
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  copies Copy[]
+}

@@ -53,6 +53,42 @@ app.get('/api/users/:id', (req, res) => {
   return res.status(200).json(user);
 });
 
+//config o serv p/ receber dados json
+app.use(express.json());
+
+//instalar extencao 'thunder client'
+//post localhost:3000/api/users
+app.post('/api/users', (req, res) => {
+//app.get('/api/users', (req, res) => {
+  console.log(req.body);
+
+  const { body } = req;
+  const id = users[users.length - 1].id + 1;
+  const newUser = { ...body, id };
+  users.push(newUser);
+
+  return res.status(201).json(newUser);
+
+  // return res.sendStatus(200);
+  //navegador só vai disparar get e não post, a nao ser com o http client
+});
+
+//delete localhost:3000/api/users/:id
+app.delete("/api/users/:id", (req, res) => {
+  console.log(req.params);
+
+  const id = parseInt(req.params.id);
+
+  const index = users.findIndex(user => user.id === id);
+  if (index === -1) {
+    return res.sendStatus(404);
+  }
+
+  users.splice(index, 1);
+
+  return res.sendStatus(204);
+});
+
 app.listen(3000, () => {
   console.log("Servidor rodando na porta 3000...");
 });

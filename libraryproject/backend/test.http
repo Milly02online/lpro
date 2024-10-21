@@ -1,0 +1,41 @@
+###
+
+POST http://localhost:3000/api/v1/users/register
+content-type: application/json
+
+{
+    "name": "Luiz Rodrigues",
+    "username": "lrodrigues",
+    "email": "lrodrigues@ifsp.edu.br",
+    "password": "12345678",
+    "phone": "(12) 99876-5432",
+    "role": "ADMINISTRATOR"
+}
+
+###
+
+POST http://localhost:3000/api/v1/auth/login
+content-type: application/json
+
+{
+    "username": "lrodrigues",
+    "password": "12345678"
+}
+
+###
+
+GET http://localhost:3000/api/v1/auth/public-resource
+content-type: application/json
+
+###
+
+GET http://localhost:3000/api/v1/auth/token-protected-resource
+content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTAsImlhdCI6MTcyODI3MDc4MCwiZXhwIjoxNzI4Mjc0MzgwfQ.zXnSLo0rcOY9vEVDBScVxatDI7HEmy4eI-ntoP2CAJ4
+
+###
+
+GET http://localhost:3000/api/v1/auth/role-protected-resource
+content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTAsImlhdCI6MTcyODI3MDc4MCwiZXhwIjoxNzI4Mjc0MzgwfQ.zXnSLo0rcOY9vEVDBScVxatDI7HEmy4eI-ntoP2CAJ4
+

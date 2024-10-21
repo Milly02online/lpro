@@ -1,0 +1,13 @@
+erros comuns:
+
+- acessar o diretório correto (onde o arquivo package.json está)
+- cmd ao invés de powershell
+- o correto é "scripts" ao invés de "Scripts"
+- auto save "vscode" - nao colocar
+
+desligar o servidor / "limpar" o terminal => ctrl c 2x
+
+- npm install nodemon --save-dev OU npm i nodemon -D
+- scripts (package.json):
+  rodar node = npm run start
+  rodar nodemon = npm run dev
